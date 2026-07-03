@@ -43,7 +43,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_spectacular',
     'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
+
+    # Project apps
+    'core_apps.accounts'
 
 
 ]
@@ -131,6 +135,8 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+AUTH_USER_MODEL = 'accounts.User'
+
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -143,7 +149,6 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'Learning project od django for authentication',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
-
 }
 
 CORS_ALLOWED_ORIGINS = [
@@ -195,3 +200,22 @@ SIMPLE_JWT = {
     "REVOKE_TOKEN_CLAIM": "hash_password",
     "CHECK_USER_IS_ACTIVE": True,
 }
+
+PASSWORD_RESET_TIMEOUT = 300
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = ""  # sender user email
+EMAIL_HOST_PASSWORD = ""  # sender email password
+DEFAULT_FROM_EMAIL = "My Website <noreply@example.com>"
+
+
+CELERY_BROKER_URL = "redis://localhost:6379/0"
+CELERY_RESULT_BACKEND = "redis://localhost:6379/1"
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TIMEZONE = "UTC"
+CELERY_ENABLE_UTC = True
